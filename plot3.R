@@ -1,0 +1,13 @@
+## plot3.R
+library(lubridate)
+library(dplyr)
+d<-read.csv("household_power_consumption.txt",sep=";",na.strings="?")
+d$Date<-dmy(d$Date)
+d1 <- filter(d, Date == ymd("20070201") | Date == ymd("20070202"))
+d1$Time <- hms(d1$Time)
+png(filename = "plot3.png")
+plot(d1$Date+d1$Time, d1$Sub_metering_1, type = "l", ylab = "Energy Sub Metering", xlab = "")
+lines(d1$Date+d1$Time,d1$Sub_metering_2,col="Red")
+lines(d1$Date+d1$Time,d1$Sub_metering_3,col="Blue")
+legend("topright", legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), col=c("Black","Red","Blue"), lty = 1)
+dev.off()

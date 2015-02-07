@@ -1,0 +1,10 @@
+## plot2.R
+library(lubridate)
+library(dplyr)
+d<-read.csv("household_power_consumption.txt",sep=";",na.strings="?")
+d$Date<-dmy(d$Date)
+d1 <- filter(d, Date == ymd("20070201") | Date == ymd("20070202"))
+d1$Time <- hms(d1$Time)
+png(filename = "plot2.png")
+plot(d1$Date+d1$Time, d1$Global_active_power, type = "l", ylab = "Global Active Power (kilowatts)", xlab = "")
+dev.off()
